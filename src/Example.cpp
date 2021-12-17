@@ -18,17 +18,12 @@
 int main(int argc, const char* argv[])
 {
     const auto parser = ph::Parser({"l#.", "b'.", "A", "i+", "I+", "c'"}, ph::Arguments{.argc = argc, .argv = argv});
-
-    for(const long double& item : parser.GetFPList('l'))
-    {
-        std::cout << item << '\n';
-    }
-
     std::cout << "Boolean flag \"A\" is specified: " << std::boolalpha << parser.GetBool('A') << '\n';
     std::cout << "Two integers i and I summed up: " << (parser.GetInt('i') + parser.GetInt('I')) << '\n';
     std::cout << "String with flag 'c' is: " << parser.GetString('c') << '\n';
 
-    const auto& fpList = parser.GetFPList('l');
+    auto fpList = parser.GetFPList('l');
+    std::sort(fpList.begin(), fpList.end());
     std::for_each(fpList.begin(), fpList.end(), [](const auto& pItem){ std::cout << pItem << '\n'; });
 
     puts("");
